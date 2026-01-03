@@ -16,6 +16,8 @@ g++ -pthread monte_carlo.cpp -o monte_carlo
 ./monte_carlo
 ```
 2. Import the simulation results into the SQL database for structured analysis :
-```sqlite3 risk_data.db ".mode csv" ".import sim_outcomes.csv outcomes"```
-3. Risk Reporting :
+```
+sqlite3 risk_data.db ".mode csv" ".import sim_outcomes.csv outcomes"
+```
+4. Risk Reporting :
 ```python3 risk_plot.py```
