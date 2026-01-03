@@ -5,17 +5,24 @@
 - The primary engineering challenge of this project was managing Concurrency Safety—ensuring that when thousands of simulations run in parallel, shared memory and result buffers remain protected from data corruption.
 - 
 ## Tools
-- C++ (Pthreads): Used for the high-performance, multi-threaded simulation engine to perform heavy stochastic computations.
-- Python (Pandas, Matplotlib): Utilized for statistical data analysis, percentile calculations, and generating risk distribution histograms
-- SQL (SQLite): Acts as the structured persistence layer for managing the high-volume output of simulation paths.
+- <ins>C++ (Pthreads)</ins>: Used for the high-performance, multi-threaded simulation engine to perform heavy stochastic computations.
+- <ins>Python (Pandas, Matplotlib)</ins>: Utilized for statistical data analysis, percentile calculations, and generating risk distribution histograms
+- <ins>SQL (SQLite)</ins>: Acts as the structured persistence layer for managing the high-volume output of simulation paths.
+- <ins>SPIN Model Checker (Promela)</ins>: Employed for formal verification of the thread-locking mechanisms to prove the system is deadlock-free.
 
 ## Execution
-1. High-Performance Simulation :
+1. Formal Verification :
+```
+spin -a threads.pml
+gcc -o pan pan.c
+./pan
+```
+2. High-Performance Simulation :
 ```
 g++ -pthread monte_carlo.cpp -o monte_carlo
 ./monte_carlo
 ```
-2. Import the simulation results into the SQL database for structured analysis :
+3. Import the simulation results into the SQL database for structured analysis :
 ```
 sqlite3 risk_data.db ".mode csv" ".import sim_outcomes.csv outcomes"
 ```
