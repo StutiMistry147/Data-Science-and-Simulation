@@ -9,15 +9,7 @@ Core Features:
 - JSON report generation
 
 ## Architecture
-graph LR
-    A[CSV Portfolio] --> B[Portfolio Manager]
-    B --> C[Data Fetcher]
-    C --> D{Yahoo Finance API}
-    D --> E[SQLite Cache]
-    E --> F[Risk Calculator]
-    F --> G[Metrics Calculation]
-    G --> H[Terminal Display]
-    G --> I[JSON Report]
+CSV Portfolio → Data Fetcher → Risk Calculator → Terminal Display/JSON Report
 ## Execution
 Requirements 
 - Python 3.8+
