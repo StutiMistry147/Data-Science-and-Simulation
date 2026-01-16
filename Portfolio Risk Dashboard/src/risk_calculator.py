@@ -15,20 +15,49 @@ class RiskCalculator:
         portfolio_df['pnl_percent'] = (portfolio_df['unrealized_pnl'] / portfolio_df['cost_basis'] * 100)
         
         return portfolio_df
-    
     @staticmethod
     def calculate_returns(prices_df, tickers):
         """Calculate daily returns for each stock"""
         returns_data = {}
         
         for ticker in tickers:
-            ticker_data = prices_df[prices_df['Ticker'] == ticker]
-            if not ticker_data.empty and 'Close' in ticker_data.columns:
-                prices = ticker_data['Close'].values
-                returns = np.diff(prices) / prices[:-1] 
-                returns_data[ticker] = returns
-        
-        return pd.DataFrame(returns_data)
+            ticker_data = prices_df[prices_df['Ticker'] == ticker].copy()
+            
+            if not ticker_data.empty:
+                ticker_data = ticker_data.sort_values('Date')
+                price_col = None
+                for col in ['Close', 'close', 'Adj Close', 'AdjClose']:
+                    if col in ticker_data.columns:
+                        price_col = col
+                        break
+                
+                if price_col:
+                    prices = ticker_data[price_col].values
+                    if len(prices) > 1:
+                        returns = np.diff(prices) / prices[:-1]
+                        returns_data[ticker] = returns
+                    else:
+                        print(f"Warning: Not enough data for {ticker}")
+                else:
+                    print(f"Warning: No price column found for {ticker}")
+                    print(f"Available columns: {ticker_data.columns.tolist()}")
+            else:
+                print(f"Warning: No data found for ticker {ticker}")
+        if returns_data:
+            max_len = max(len(v) for v in returns_data.values())
+            padded_data = {}
+            for ticker, returns in returns_data.items():
+                if len(returns) < max_len:
+                    padded = np.full(max_len, np.nan)
+                    padded[:len(returns)] = returns
+                    padded_data[ticker] = padded
+                else:
+                    padded_data[ticker] = returns
+            
+            return pd.DataFrame(padded_data)
+        else:
+            print("Error: No returns data calculated")
+            return pd.DataFrame()
     
     @staticmethod
     def calculate_var(returns, confidence_level=0.95, method='historical'):
