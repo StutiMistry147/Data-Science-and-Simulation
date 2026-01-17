@@ -3,21 +3,19 @@
 Transaction Anomaly Detector is a data science and systems project that identifies suspicious financial transactions using rule-based detection with concurrency verification. The system implements multiple detection rules and uses Promela/Spin for formal verification of thread safety in concurrent transaction processing.
 
 ## Architecture
-┌──────────────────────────────────────────────────────────┐
-│              Transaction Anomaly Detector                │
-├──────────────────────────────────────────────────────────┤
-│  Detection Layer   │   Analysis Layer   │  Verification  │
-│  • Rule Engine     │   • Risk Scoring   │  • Promela     │
-│  • Real-time       │   • Statistics     │  • Spin        │
-│  • Batch           │   • Reporting      │  • Concurrency │
-└──────────────────────────────────────────────────────────┘
-         │                     │                    │
-         ▼                     ▼                    ▼
-┌──────────────┐      ┌──────────────┐     ┌────────────────┐
-│  Transaction │      │  Analytics   │     │  Model Checker │
-│  Simulator   │      │  Dashboard   │     │  (Spin)        │
-└──────────────┘      └──────────────┘     └────────────────┘
-
+flowchart TD
+    subgraph "Transaction Anomaly Detector"
+        DL[Detection Layer<br/>• Rule Engine<br/>• Real-time<br/>• Batch]
+        AL[Analysis Layer<br/>• Risk Scoring<br/>• Statistics<br/>• Reporting]
+        VL[Verification<br/>• Promela<br/>• Spin<br/>• Concurrency]
+    end
+    
+    TS[Transaction Simulator] --> DL
+    DL --> AD[Analytics Dashboard]
+    VL --> MC[Model Checker<br/>(Spin)]
+    
+    DL -.->|Processes| AL
+    DL -.->|Verifies| VL
 ## Execution
 1. ```
    python3 -m venv venv
