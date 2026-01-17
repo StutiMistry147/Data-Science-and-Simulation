@@ -3,19 +3,7 @@
 Transaction Anomaly Detector is a data science and systems project that identifies suspicious financial transactions using rule-based detection with concurrency verification. The system implements multiple detection rules and uses Promela/Spin for formal verification of thread safety in concurrent transaction processing.
 
 ## Architecture
-flowchart TD
-    subgraph "Transaction Anomaly Detector"
-        DL[Detection Layer<br/>• Rule Engine<br/>• Real-time<br/>• Batch]
-        AL[Analysis Layer<br/>• Risk Scoring<br/>• Statistics<br/>• Reporting]
-        VL[Verification<br/>• Promela<br/>• Spin<br/>• Concurrency]
-    end
-    
-    TS[Transaction Simulator] --> DL
-    DL --> AD[Analytics Dashboard]
-    VL --> MC[Model Checker<br/>(Spin)]
-    
-    DL -.->|Processes| AL
-    DL -.->|Verifies| VL
+<img width="1494" height="1497" alt="Transactionsim" src="https://github.com/user-attachments/assets/4d9205e6-f321-4b28-b3e8-54dc065c976a" />
 ## Execution
 1. ```
    python3 -m venv venv
