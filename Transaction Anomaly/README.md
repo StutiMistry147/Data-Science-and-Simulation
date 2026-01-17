@@ -4,6 +4,7 @@ Transaction Anomaly Detector is a data science and systems project that identifi
 
 ## Architecture
 <img width="1494" height="1497" alt="Transactionsim" src="https://github.com/user-attachments/assets/4d9205e6-f321-4b28-b3e8-54dc065c976a" />
+
 ## Execution
 1. ```
    python3 -m venv venv
