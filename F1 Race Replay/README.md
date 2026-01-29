@@ -22,8 +22,10 @@ cd f1-race-relay
 
 Method 1: Use the launcher (recommended)
 `python launch.py`
+
 Method 2: Direct GUI launch
 `python modern_gui.py`
+
 Method 3: Generate visualizations only
 `python modern_plots.py`
 
